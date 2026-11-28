@@ -1,0 +1,22 @@
+plugins { id 'com.android.application' }
+android {
+    namespace 'com.eggrun.game'
+    compileSdk 34
+    defaultConfig {
+        applicationId 'com.eggrun.game'
+        minSdk 24
+        targetSdk 34
+        versionCode 1
+        versionName '1.0'
+    }
+    buildFeatures { buildConfig true }
+    buildTypes {
+        // debug = anuncios de PRUEBA, release = anuncios REALES (ver AdConfig.java)
+        debug   { buildConfigField 'boolean', 'USE_TEST_ADS', 'true' }
+        release { minifyEnabled false; buildConfigField 'boolean', 'USE_TEST_ADS', 'false' }
+    }
+    compileOptions { sourceCompatibility JavaVersion.VERSION_17; targetCompatibility JavaVersion.VERSION_17 }
+}
+dependencies {
+    implementation 'com.google.android.gms:play-services-ads:23.6.0'
+}

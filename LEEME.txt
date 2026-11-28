@@ -1,0 +1,26 @@
+EGG RUN - proyecto Android (Java + WebView + Google AdMob)
+
+COMPILAR
+  Opcion A (sin instalar nada): sube esta carpeta a un repo de GitHub -> pestaña Actions -> "Build APK" -> descarga EggRun-apk (app-debug.apk).
+  Opcion B: Android Studio -> abrir la carpeta -> Build > Build APK(s).
+  Hace falta Internet en la primera compilacion (descarga el SDK de anuncios com.google.android.gms:play-services-ads).
+
+ANUNCIOS (AdMob)
+  Archivos: AdConfig.java (IDs y reglas), AdsManager.java (logica), EggRunAdsBridge.java (puente JS "AndroidAds").
+  Entorno:  build DEBUG  (assembleDebug)   = anuncios de PRUEBA de Google  (seguro para probar)
+            build RELEASE (assembleRelease) = anuncios REALES con tus IDs
+            Para forzar uno en cualquier build: AdConfig.FORCE = Mode.TEST o Mode.PRODUCTION.
+  NO hagas clic en anuncios reales con tu propia cuenta: AdMob puede suspenderla.
+  Reglas (AdConfig.java): minimo 90 s entre intersticiales y 1 intersticial por cada 2 acciones elegibles.
+
+COMO PROBAR
+  1. Instala el APK debug en un telefono con Internet. Los anuncios de prueba llevan la etiqueta "Test Ad".
+  2. Niveles: Niveles > JUGAR en un nivel => intersticial y, al cerrarlo, empieza el nivel. La 1ª vez siempre; despues cumple 90 s + 1 de cada 2 acciones.
+  3. Tienda: primera mejora comprada con exito => intersticial (una sola vez en total; se guarda en el telefono).
+  4. Revivir: pierde => "REVIVIR CON ANUNCIO". Anuncio completo = revive. Cerrarlo antes = no revive.
+  5. Sin Internet: el nivel empieza igual y el revivir con anuncio avisa "No hay anuncios disponibles".
+  6. Logs: filtra "EggRunAds" en Logcat.
+
+ANTES DE PUBLICAR
+  - En el HTML: PAY={test:true} debe pasar a false (si no, las compras de carne "de prueba" dan carne gratis; hoy la pestaña COMPRAR CARNE esta desactivada con MEAT_SHOP_ENABLED=false).
+  - Genera el release firmado (assembleRelease) para usar los IDs reales.
